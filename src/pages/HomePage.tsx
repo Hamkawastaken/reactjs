@@ -33,31 +33,34 @@ const HomePage = () => {
   ];
 
   return (
-      <>
-        <div style={{ padding: "16px 44px" }}>
-          <h1>Home Page</h1>
+    <>
+      <div style={{ padding: "16px 44px" }}>
+        <h1>Home Page</h1>
+        <div style={{display: "flex", gap: "16px"}}>
           <Link to="/terms">To Terms Page</Link>
+          <Link to="/productList">To Product List Page</Link>
           <Link to="/product/:productSlug">To Product Page</Link>
-          
-          <Welcome />
-
-          <div style={{ display: "flex", gap: "8px", flexDirection: "row" }}>
-            {persons.map((person) => {
-              return (
-                <ProfileCard
-                  birth={person.birth}
-                  name={person.name}
-                  job={person.job}
-                />
-              );
-            })}
-          </div>
-
-          <div style={{ display: "flex", gap: "16px", marginTop: "16px" }}>
-            <Counter />
-          </div>
         </div>
-      </>
+
+        <Welcome />
+
+        <div style={{ display: "flex", gap: "8px", flexDirection: "row" }}>
+          {persons.map((person) => {
+            return (
+              <ProfileCard
+                birth={person.birth}
+                name={person.name}
+                job={person.job}
+              />
+            );
+          })}
+        </div>
+
+        <div style={{ display: "flex", gap: "16px", marginTop: "16px" }}>
+          <Counter />
+        </div>
+      </div>
+    </>
   );
 };
 
