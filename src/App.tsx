@@ -4,6 +4,9 @@ import Navbar from "./components/Navbar";
 import MainPage from "./pages/MainPage";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
+import ErrorPage from "./pages/ErrorPage";
+import ProductsPage from "./pages/ProductsPage";
+
 
 // import HomePage from "./pages/HomePage";
 // import TermsPage from "./pages/TermsPage";
@@ -17,7 +20,9 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />}></Route>
         <Route path="/about" element={<AboutPage />}></Route>
+        <Route path="/product" element={<ProductsPage />}></Route>
         <Route path="/contact" element={<ContactPage />}></Route>
+        <Route path="/*" element={<ErrorPage />}></Route>
       </Routes>
     </>
   );
