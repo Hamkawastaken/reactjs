@@ -6,6 +6,7 @@ import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import ErrorPage from "./pages/ErrorPage";
 import ProductsPage from "./pages/ProductsPage";
+import ProductDetailPage from "./pages/ProductDetailPage";
 
 
 // import HomePage from "./pages/HomePage";
@@ -21,6 +22,7 @@ function App() {
         <Route path="/" element={<MainPage />}></Route>
         <Route path="/about" element={<AboutPage />}></Route>
         <Route path="/product" element={<ProductsPage />}></Route>
+        <Route path="product/:id" element={<ProductDetailPage />}></Route>
         <Route path="/contact" element={<ContactPage />}></Route>
         <Route path="/*" element={<ErrorPage />}></Route>
       </Routes>
