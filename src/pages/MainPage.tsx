@@ -1,10 +1,4 @@
-import { useState } from "react";
-
 const MainPage = () => {
-  const [fullNameInput, setFullNameInput] = useState("");
-  const [emailInput, setEmailInput] = useState("");
-
-  const handleSubmit = () => {};
 
   return (
     <>
@@ -24,34 +18,7 @@ const MainPage = () => {
           necessitatibus consequatur enim a ut tenetur
         </p>
 
-        <br />
-        <p> Full Name : {fullNameInput} </p>
-        <p> Email : {emailInput} </p>
-        <form action="" className="flex flex-col mt-4 border p-4 rounded-lg">
-          <label htmlFor="full-name">Full Name</label>
-          <input
-            onChange={(e) => setFullNameInput(e.target.value)}
-            type="text"
-            id="full-name"
-            className="border rounded-lg p-1"
-            value={fullNameInput}
-          />
-          <label htmlFor="email">Email</label>
-          <input
-            onChange={(e) => setEmailInput(e.target.value)}
-            type="text"
-            id="email"
-            className="border rounded-lg p-1"
-            value={emailInput}
-          />
-          <button
-            onClick={handleSubmit}
-            type="submit"
-            className="rounded-lg font-semibold p-1 mt-2 bg-sky-500 text-white"
-          >
-            Submit
-          </button>
-        </form>
+        
       </div>
     </>
   );
