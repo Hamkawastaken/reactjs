@@ -9,6 +9,7 @@ import ProductsPage from "./pages/ProductsPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import FormHandling from "./pages/FormHandling";
 import RHFPage from "./pages/RHFPage";
+import RHFHomeworkPage from "./pages/RHFHomeworkPage";
 
 
 // import HomePage from "./pages/HomePage";
@@ -28,6 +29,7 @@ function App() {
         <Route path="/contact" element={<ContactPage />}></Route>
         <Route path="/form" element={<FormHandling />}></Route>
         <Route path="/formrhf" element={<RHFPage />}></Route>
+        <Route path="/formhw" element={<RHFHomeworkPage />}></Route>
         <Route path="/*" element={<ErrorPage />}></Route>
       </Routes>
     </>
