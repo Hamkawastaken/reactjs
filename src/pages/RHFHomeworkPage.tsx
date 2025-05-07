@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 const SignUpSchema = z.object({
   username: z.string().min(3),
   email: z.string().email(),
@@ -21,7 +22,11 @@ const RHFHomeworkPage = () => {
     formState: { errors },
   } = useForm<SignUpSchemaType>({ resolver: zodResolver(SignUpSchema) });
 
+  const [users, setUsers] = useState<SignUpSchemaType[]>([]);
+
   const onSubmit = (values: SignUpSchemaType) => {
+    setUsers((prevUsers) => [...prevUsers, values]);
+    console.log("User List", [...users, values]);
     alert(JSON.stringify(values));
   };
 
@@ -96,6 +101,20 @@ const RHFHomeworkPage = () => {
             </button>
           </form>
         </div>
+      </div>
+
+      <div className="users-card flex flex-wrap justify-center mx-auto gap-4">
+        {users.map((user) => {
+          return (
+            <div className="border border-blue-500 rounded flex flex-col w-72 p-4 mt-4">
+              <h1 className="text-xl font-bold text-center mb-4">User Card</h1>
+              <p>Name : {user.username}</p>
+              <p>Email : {user.email}</p>
+              <p>Password : {user.password}</p>
+              <p>Age : {user.age}</p>
+            </div>
+          );
+        })}
       </div>
     </>
   );
