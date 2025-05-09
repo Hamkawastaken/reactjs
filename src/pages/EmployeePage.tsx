@@ -1,19 +1,30 @@
 import { useState } from "react";
 
-type Employee = {
+type Employees = {
   id: number;
   name: string;
 };
 
 const EmployeePage = () => {
-  const [employees, setEmployees] = useState<Employee[]>([]);
+  const [employees, setEmployees] = useState<Employees[]>([]);
+  const [employeesIsLoading, setEmployeesIsLoading] = useState(false);
 
   const fetchEmployees = async () => {
-    const request = await fetch("http://localhost:2000/employees", {
-      method: "GET",
-    });
-    const responseJson = (await request.json()) as Employee[];
-    setEmployees(responseJson);
+    try {
+
+    setEmployeesIsLoading(true);
+      const request = await fetch("http://localhost:2000/employees", {
+        method: "GET",
+      });
+      const responseJson = (await request.json()) as Employees[];
+
+      setEmployees(responseJson);
+    } catch (err) {
+      alert("Gagal Mengambil Data");
+      console.log(err)
+    } finally {
+        setEmployeesIsLoading(false)
+    }
   };
 
   return (
@@ -43,6 +54,7 @@ const EmployeePage = () => {
       >
         Fetch Employees
       </button>
+      {employeesIsLoading && <span>Loading...</span>}
     </div>
   );
 };
