@@ -1,8 +1,24 @@
+import { useState } from "react";
 import useFetchEmployees from "../api/useFetchEmployees";
+import useCreateEmployees from "../api/useCreateEmployee";
 
 const EmployeePage = () => {
+  const [inputText, setInputText] = useState("");
+
   const { employees, employeesError, employeesIsLoading, fetchEmployees } =
     useFetchEmployees();
+
+  const {
+    createEmployeesError,
+    createEmployeesIsLoading,
+    createEmployee,
+  } = useCreateEmployees();
+
+  const handleCreateEmployee = async () => {
+    await createEmployee(inputText)
+    await fetchEmployees()
+    setInputText("")
+  }
 
   return (
     <div className="flex flex-col justify-center items-center mt-12 border py-4">
@@ -24,6 +40,29 @@ const EmployeePage = () => {
             );
           })}
         </tbody>
+        <tfoot>
+          <tr>
+            <td colSpan={2}>
+              <input
+                onChange={(e) => setInputText(e.target.value)}
+                value={inputText}
+                type="text"
+                className="border rounded m-2 p-0.5"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td colSpan={2}>
+              <button
+                className="border rounded flex justify-center items-center mb-2 mx-auto cursor-pointer bg-blue-500 text-white px-2 py-1"
+                disabled={createEmployeesIsLoading}
+                onClick={handleCreateEmployee}
+              >
+                Create Employee
+              </button>
+            </td>
+          </tr>
+        </tfoot>
       </table>
       <button
         onClick={fetchEmployees}
@@ -33,6 +72,9 @@ const EmployeePage = () => {
       </button>
       {employeesIsLoading && <span>Loading...</span>}
       {employeesError && <span className="text-red-500">{employeesError}</span>}
+      {createEmployeesError && (
+        <span className="text-red-500">{createEmployeesError}</span>
+      )}
     </div>
   );
 };
