@@ -8,6 +8,7 @@ type Employees = {
 const EmployeePage = () => {
   const [employees, setEmployees] = useState<Employees[]>([]);
   const [employeesIsLoading, setEmployeesIsLoading] = useState(false);
+  const [employeesError, setEmployeesError] = useState("");
 
   const fetchEmployees = async () => {
     try {
@@ -19,9 +20,8 @@ const EmployeePage = () => {
       const responseJson = (await request.json()) as Employees[];
 
       setEmployees(responseJson);
-    } catch (err) {
-      alert("Gagal Mengambil Data");
-      console.log(err)
+    } catch (error) {
+      setEmployeesError((error as TypeError).message)
     } finally {
         setEmployeesIsLoading(false)
     }
@@ -55,6 +55,7 @@ const EmployeePage = () => {
         Fetch Employees
       </button>
       {employeesIsLoading && <span>Loading...</span>}
+      {employeesError && <span className="text-red-500">{employeesError}</span>}
     </div>
   );
 };
