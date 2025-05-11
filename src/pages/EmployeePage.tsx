@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useFetchEmployees from "../api/useFetchEmployees";
 import useCreateEmployees from "../api/useCreateEmployee";
+import useDeleteEmployee from "../api/useDeleteEmployee";
 
 const EmployeePage = () => {
   const [inputText, setInputText] = useState("");
@@ -8,17 +9,21 @@ const EmployeePage = () => {
   const { employees, employeesError, employeesIsLoading, fetchEmployees } =
     useFetchEmployees();
 
-  const {
-    createEmployeesError,
-    createEmployeesIsLoading,
-    createEmployee,
-  } = useCreateEmployees();
+  const { createEmployeesError, createEmployeesIsLoading, createEmployee } =
+    useCreateEmployees();
+
+  const { deleteEmployee } = useDeleteEmployee();
 
   const handleCreateEmployee = async () => {
-    await createEmployee(inputText)
-    await fetchEmployees()
-    setInputText("")
-  }
+    await createEmployee(inputText);
+    await fetchEmployees();
+    setInputText("");
+  };
+
+  const handleDeleteEmployee = async (employeeId: string) => {
+    await deleteEmployee(employeeId);
+    await fetchEmployees();
+  };
 
   return (
     <div className="flex flex-col justify-center items-center mt-12 border py-4">
@@ -28,14 +33,23 @@ const EmployeePage = () => {
           <tr>
             <th className="border border-blue-500 p-2">ID</th>
             <th className="border border-blue-500 p-2">Name</th>
+            <th className="border border-blue-500 p-2">Action</th>
           </tr>
         </thead>
         <tbody>
           {employees.map((employee) => {
             return (
-              <tr>
+              <tr key={employee.id}>
                 <td className="border border-blue-500 p-2">{employee.id}</td>
                 <td className="border border-blue-500 p-2">{employee.name}</td>
+                <td className="border border-blue-500 p-2">
+                  <button
+                    onClick={() => handleDeleteEmployee(employee.id)}
+                    className="border cursor-pointer p-1 rounded bg-red-500 text-white"
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
             );
           })}

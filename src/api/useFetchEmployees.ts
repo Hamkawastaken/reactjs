@@ -3,7 +3,7 @@ import { axiosInstance } from "../lib/axios";
 
 const useFetchEmployees = () => {
   type Employees = {
-    id: number;
+    id: string;
     name: string;
   };
 
