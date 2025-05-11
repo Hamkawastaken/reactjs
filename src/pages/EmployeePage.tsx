@@ -1,31 +1,8 @@
-import { useState } from "react";
-
-type Employees = {
-  id: number;
-  name: string;
-};
+import useFetchEmployees from "../api/useFetchEmployees";
 
 const EmployeePage = () => {
-  const [employees, setEmployees] = useState<Employees[]>([]);
-  const [employeesIsLoading, setEmployeesIsLoading] = useState(false);
-  const [employeesError, setEmployeesError] = useState("");
-
-  const fetchEmployees = async () => {
-    try {
-
-    setEmployeesIsLoading(true);
-      const request = await fetch("http://localhost:2000/employees", {
-        method: "GET",
-      });
-      const responseJson = (await request.json()) as Employees[];
-
-      setEmployees(responseJson);
-    } catch (error) {
-      setEmployeesError((error as TypeError).message)
-    } finally {
-        setEmployeesIsLoading(false)
-    }
-  };
+  const { employees, employeesError, employeesIsLoading, fetchEmployees } =
+    useFetchEmployees();
 
   return (
     <div className="flex flex-col justify-center items-center mt-12 border py-4">
