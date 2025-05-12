@@ -6,6 +6,8 @@ import useDeleteEmployee from "../api/useDeleteEmployee";
 const EmployeePage = () => {
   const [inputText, setInputText] = useState("");
 
+  const [selectedEmployee, setSelectedEmployee] = useState("")
+
   const { employees, employeesError, employeesIsLoading, fetchEmployees } =
     useFetchEmployees();
 
@@ -34,6 +36,7 @@ const EmployeePage = () => {
             <th className="border border-blue-500 p-2">ID</th>
             <th className="border border-blue-500 p-2">Name</th>
             <th className="border border-blue-500 p-2">Action</th>
+            <th className="border border-blue-500 p-2">Select Edit</th>
           </tr>
         </thead>
         <tbody>
@@ -50,13 +53,16 @@ const EmployeePage = () => {
                     Delete
                   </button>
                 </td>
+                <td className="border border-blue-500 p-2 mx-auto">
+                  <input onChange={() => setSelectedEmployee(employee.id)} type="radio" name="employee-edit" />
+                </td>
               </tr>
             );
           })}
         </tbody>
         <tfoot>
           <tr>
-            <td colSpan={2}>
+            <td colSpan={2} className="border border-blue-500 p-2">
               <input
                 onChange={(e) => setInputText(e.target.value)}
                 value={inputText}
@@ -64,9 +70,7 @@ const EmployeePage = () => {
                 className="border rounded m-2 p-0.5"
               />
             </td>
-          </tr>
-          <tr>
-            <td colSpan={2}>
+            <td className="border border-blue-500 p-2">
               <button
                 className="border rounded flex justify-center items-center mb-2 mx-auto cursor-pointer bg-blue-500 text-white px-2 py-1"
                 disabled={createEmployeesIsLoading}
@@ -76,6 +80,7 @@ const EmployeePage = () => {
               </button>
             </td>
           </tr>
+          <tr></tr>
         </tfoot>
       </table>
       <button
@@ -84,6 +89,8 @@ const EmployeePage = () => {
       >
         Fetch Employees
       </button>
+      
+      {selectedEmployee}
       {employeesIsLoading && <span>Loading...</span>}
       {employeesError && <span className="text-red-500">{employeesError}</span>}
       {createEmployeesError && (
