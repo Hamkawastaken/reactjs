@@ -2,17 +2,22 @@ import { useState } from "react";
 import useFetchEmployees from "../api/useFetchEmployees";
 import useCreateEmployees from "../api/useCreateEmployee";
 import useDeleteEmployee from "../api/useDeleteEmployee";
+import useEditEmployees from "../api/useEditEmployee";
 
 const EmployeePage = () => {
   const [inputText, setInputText] = useState("");
 
-  const [selectedEmployee, setSelectedEmployee] = useState("")
+  const [selectedEmployeeId, setSelectedEmployeeId] = useState("");
+  const [editInputText, setEditInputText] = useState("");
 
   const { employees, employeesError, employeesIsLoading, fetchEmployees } =
     useFetchEmployees();
 
   const { createEmployeesError, createEmployeesIsLoading, createEmployee } =
     useCreateEmployees();
+
+  const { editEmployee } =
+    useEditEmployees();
 
   const { deleteEmployee } = useDeleteEmployee();
 
@@ -25,6 +30,11 @@ const EmployeePage = () => {
   const handleDeleteEmployee = async (employeeId: string) => {
     await deleteEmployee(employeeId);
     await fetchEmployees();
+  };
+
+  const handleEditEmployee = async () => {
+    editEmployee(selectedEmployeeId, editInputText);
+    fetchEmployees();
   };
 
   return (
@@ -54,7 +64,11 @@ const EmployeePage = () => {
                   </button>
                 </td>
                 <td className="border border-blue-500 p-2 mx-auto">
-                  <input onChange={() => setSelectedEmployee(employee.id)} type="radio" name="employee-edit" />
+                  <input
+                    onChange={() => setSelectedEmployeeId(employee.id)}
+                    type="radio"
+                    name="employee-edit"
+                  />
                 </td>
               </tr>
             );
@@ -80,7 +94,23 @@ const EmployeePage = () => {
               </button>
             </td>
           </tr>
-          <tr></tr>
+          <tr>
+            <td colSpan={2} className="border border-blue-500 p-2">
+              <input
+                onChange={(e) => setEditInputText(e.target.value)}
+                type="text"
+                className="border rounded m-2 p-0.5"
+              />
+            </td>
+            <td className="border border-blue-500 p-2">
+              <button
+                onClick={handleEditEmployee}
+                className="border rounded flex justify-center items-center mb-2 mx-auto cursor-pointer bg-blue-500 text-white px-2 py-1"
+              >
+                Edit Employee
+              </button>
+            </td>
+          </tr>
         </tfoot>
       </table>
       <button
@@ -89,8 +119,8 @@ const EmployeePage = () => {
       >
         Fetch Employees
       </button>
-      
-      {selectedEmployee}
+
+      {selectedEmployeeId}
       {employeesIsLoading && <span>Loading...</span>}
       {employeesError && <span className="text-red-500">{employeesError}</span>}
       {createEmployeesError && (
