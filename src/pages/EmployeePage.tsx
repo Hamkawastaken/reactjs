@@ -16,8 +16,7 @@ const EmployeePage = () => {
   const { createEmployeesError, createEmployeesIsLoading, createEmployee } =
     useCreateEmployees();
 
-  const { editEmployee } =
-    useEditEmployees();
+  const { editEmployee } = useEditEmployees();
 
   const { deleteEmployee } = useDeleteEmployee();
 
@@ -35,6 +34,8 @@ const EmployeePage = () => {
   const handleEditEmployee = async () => {
     editEmployee(selectedEmployeeId, editInputText);
     fetchEmployees();
+    setSelectedEmployeeId("");
+    setEditInputText("");
   };
 
   return (
@@ -65,6 +66,7 @@ const EmployeePage = () => {
                 </td>
                 <td className="border border-blue-500 p-2 mx-auto">
                   <input
+                    checked={employee.id === selectedEmployeeId}
                     onChange={() => setSelectedEmployeeId(employee.id)}
                     type="radio"
                     name="employee-edit"
@@ -99,6 +101,7 @@ const EmployeePage = () => {
               <input
                 onChange={(e) => setEditInputText(e.target.value)}
                 type="text"
+                value={editInputText}
                 className="border rounded m-2 p-0.5"
               />
             </td>
